@@ -18,6 +18,8 @@ myloc: .word 0
 .align 2
 cadena: .word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 valoractual: .asciz "\nEl valor guardado es: %d\n"
+display1: .word 0
+display2: .word 0
 
 .text
 .align 2
@@ -71,9 +73,60 @@ main:
 	BL SetGpioFunction
 
 	/*GPIO para entrada puerto 22*/			@RESET BUTTON
-	MOV r0,#22
+	MOV r0,#21
 	MOV r1,#0
 	BL SetGpioFunction
+
+	/*GPIO para salida puerto 18*/			@BUZZER
+	MOV r0, #18
+	MOV r1, #1
+	BL SetGpioFunction
+
+
+	/*DISPLAY 0*/
+
+	/*GPIO para salida puerto 20*/			@IC 74LS47, A, Bit menos significativo
+	MOV r0, #20
+	MOV r1, #1
+	BL SetGpioFunction
+
+	/*GPIO para salida puerto 7*/			@IC 74LS47, B
+	MOV r0, #7
+	MOV r1, #1
+	BL SetGpioFunction
+
+	/*GPIO para salida puerto 12*/			@IC 74LS47, C
+	MOV r0, #12
+	MOV r1, #1
+	BL SetGpioFunction
+
+	/*GPIO para salida puerto 16*/			@IC 74LS47, D, Bit mas significativo
+	MOV r0, #16
+	MOV r1, #1
+	BL SetGpioFunction
+
+	/*DISPLAY 1*/
+
+	/*GPIO para salida puerto 8*/			@IC 74LS47, A, Bit menos significativo
+	MOV r0, #8
+	MOV r1, #1
+	BL SetGpioFunction
+
+	/*GPIO para salida puerto 23*/			@IC 74LS47, B
+	MOV r0, #23
+	MOV r1, #1
+	BL SetGpioFunction
+
+	/*GPIO para salida puerto 24*/			@IC 74LS47, C
+	MOV r0, #24
+	MOV r1, #1
+	BL SetGpioFunction
+
+	/*GPIO para salida puerto 25*/			@IC 74LS47, D, Bit mas significativo
+	MOV r0, #25
+	MOV r1, #1
+	BL SetGpioFunction
+
 
 	BL off
 
@@ -102,8 +155,20 @@ fin:
 off:
 	PUSH {lr}
 
+	LDR r1, =display1
+	MOV r0, #0
+	STR r0, [r1]
+
+	BL display1_0
+
+	LDR r1, =display2
+	MOV r0, #0
+	STR r0, [r1]
+
+	BL display2_0
+
 							@GPIO 26 off el led
-	mov r0,#26
+	MOV r0,#26
 	mov r1,#0
 	bl SetGpio
 
