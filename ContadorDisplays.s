@@ -456,7 +456,7 @@ display2_4:
 
 	/*Despliega 4 en el display 2*/
 
-	MOV r0,8
+	MOV r0,#8
 	MOV r1, #0
 	BL SetGpio
 

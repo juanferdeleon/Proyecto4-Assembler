@@ -31,6 +31,7 @@ jugador:
 	/*Turno del juegador*/
 
 	CMP r8, r9				@Verifica si hay mas colores por acertar
+	BLEQ wait
 	MOVEQ r8, #0				@En caso haya acertado todos vuelve 0 a r8
 	MOVEQ r11, #0				@Sede el turno al simon
 	POPEQ {pc}				@Regresa a subrutina juego
@@ -63,6 +64,12 @@ jugador:
 	TEQ r5, #0
 	BNE led4_in
 
+	/*RESET BUTTON*/
+	MOV r1, #21
+	BL GetGpio
+	TEQ r5, #0
+	BNE reset
+
 	POP {lr}
 
 	B jugador
@@ -80,7 +87,11 @@ correcto:
 
 	ADD r8, r8, #4				@En caso sea igual agrega 4 a r8
 
+	BL buzzerOn
+
 	BL wait
+
+	BL buzzerOff
 
 	POP {lr}
 
@@ -157,7 +168,13 @@ reset:
 	MOV r1, #1
 	BL SetGpio
 
+	BL buzzerOn				@Enciende Buzzer
+
 	BL wait					@Deja encendidos los 4 leds
+
+	BL buzzerOff				@Apaga Buzzer
+
+	BL wait
 
 	BL off
 
@@ -207,6 +224,8 @@ nuevoColor:
 
 	MOV r11, #1				@Sede el turno al jugador
 
+	BL displays
+
 	/*Agrega un nuevo color a la secuencia*/
 
 	MOV r12, #4				@Se pide un valor aleatorio entre 1 y 4 (por los cuatro colores)
@@ -253,7 +272,12 @@ led1_out:
 	MOV r0, #26
 	MOV r1, #1
 	BL SetGpio
+
+	BL buzzerOn				@Enciende Buzzer
+
 	BL wait
+
+	BL buzzerOff				@Apaga Buzzer
 
 						@GPIO 26 apaga el led
 	MOV r0, #26
@@ -281,7 +305,12 @@ led2_out:
 	MOV r0,#19
 	MOV r1,#1
 	BL SetGpio
+
+	BL buzzerOn				@Enciende Buzzer
+
 	BL wait
+
+	BL buzzerOff				@Apaga Buzzer
 
 						@GPIO 19 apaga el led
 	MOV r0,#19
@@ -309,7 +338,12 @@ led3_out:
 	MOV r0,#9
 	MOV r1,#1
 	BL SetGpio
+
+	BL buzzerOn				@Enciende Buzzer
+
 	BL wait
+
+	BL buzzerOff				@Apaga Buzzer
 
 						@GPIO 9 apaga el led
 	MOV r0,#9
@@ -337,7 +371,12 @@ led4_out:
 	MOV r0, #10
 	MOV r1, #1
 	BL SetGpio
+
+	BL buzzerOn				@Enciende el Buzzer
+
 	BL wait
+
+	BL buzzerOff				@Apaga el Buzzer
 
 						@GPIO 10 apaga el led
 	MOV r0, #10
@@ -362,5 +401,29 @@ wait:
 	MOV r0, #1
 	BL sleep
 	NOP
+
+	POP {pc}
+
+buzzerOn:
+
+	PUSH {lr}
+
+	/*BUZZER ON*/
+						@GPIO 18 Enciende el Buzzer
+	MOV r0, #18
+	MOV r1, #1
+	BL SetGpio
+
+	POP {pc}
+
+buzzerOff:
+
+	PUSH {lr}
+
+	/*BUZZER OFF*/
+						@GPIO 18 Aapaga el Buzzer
+	MOV r0, #18
+	MOV r1, #0
+	BL SetGpio
 
 	POP {pc}
