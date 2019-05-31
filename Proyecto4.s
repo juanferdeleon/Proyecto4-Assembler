@@ -155,18 +155,6 @@ fin:
 off:
 	PUSH {lr}
 
-	LDR r1, =display1
-	MOV r0, #0
-	STR r0, [r1]
-
-	BL display1_0
-
-	LDR r1, =display2
-	MOV r0, #0
-	STR r0, [r1]
-
-	BL display2_0
-
 							@GPIO 26 off el led
 	MOV r0,#26
 	mov r1,#0

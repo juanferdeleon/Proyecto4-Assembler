@@ -148,6 +148,18 @@ led4_in:
 reset:
 
 	/*Reset del juego*/
+
+	LDR r1, =display1
+	MOV r0, #0
+	STR r0, [r1]
+
+	BL display1_0
+
+	LDR r1, =display2
+	MOV r0, #0
+	STR r0, [r1]
+
+	BL display2_0
 						@GPIO 26 enciende led 1
 	MOV r0, #26
 	MOV r1, #1
