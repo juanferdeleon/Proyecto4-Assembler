@@ -56,7 +56,7 @@ resetDisplay1:
 	BL display1_0
 
 	/*Valor desplegado por display 2*/
-/*	LDR r0, =display2			@Carga valor actual del display 2
+	LDR r0, =display2			@Carga valor actual del display 2
 	LDR r0, [r0]
 
 	ADD r0, r0, #1				@Agrega uno al contador del display 2
@@ -89,7 +89,7 @@ resetDisplay1:
 	BEQ display2_9
 
 	BGT display2_0
-*/
+
 guardarDisplay1:
 
 	PUSH {lr}
@@ -355,6 +355,276 @@ display1_0:
 	BL SetGpio
 
 	MOV r0, #16
+	MOV r1, #0
+	BL SetGpio
+
+	POP {pc}
+
+guardarDisplay2:
+
+	PUSH {lr}
+
+	/*Guarda el valor en memoria*/
+	LDR r1, =display2
+	STR r0, [r1]
+
+	POP {pc}
+
+display2_1:
+
+	PUSH {lr}
+
+	BL guardarDisplay2
+
+	/*Despliega 1 en display 2*/
+							@Enciende el GPIO 8
+	MOV r0, #8
+	MOV r1, #1
+	BL SetGpio
+							@Apaga el GPIO 23
+	MOV r0, #23
+	MOV r1, #0
+	BL SetGpio
+							@Apaga el GPIO 24
+	MOV r0, #24
+	MOV r1, #0
+	BL SetGpio
+							@Apaga el GPIO 25
+	MOV r0, #25
+	MOV r1, #0
+	BL SetGpio
+
+	POP {pc}
+
+display2_2:
+
+	PUSH {lr}
+
+	BL guardarDisplay2
+
+	/*Despliega 2 en el display 2*/
+							@Apaga GPIO 8
+	MOV r0, #8
+	MOV r1, #0
+	BL SetGpio
+							@Enciende GPIO 23
+	MOV r0, #23
+	MOV r1, #1
+	BL SetGpio
+							@Apaga GPIO 24
+	MOV r0, #24
+	MOV r1, #0
+	BL SetGpio
+							@Apaga GPIO 25
+	MOV r0, #25
+	MOV r1, #0
+	BL SetGpio
+
+	POP {pc}
+
+display2_3:
+
+	PUSH {lr}
+
+	BL guardarDisplay2
+
+	/*Despliega 3 en el display 2*/
+
+	MOV r0, #8
+	MOV r1, #1
+	BL SetGpio
+
+	MOV r0, #23
+	MOV r1, #1
+	BL SetGpio
+
+	MOV r0, #24
+	MOV r1, #0
+	BL SetGpio
+
+	MOV r0, #25
+	MOV r1, #0
+	BL SetGpio
+
+	POP {pc}
+
+display2_4:
+
+	PUSH {lr}
+
+	BL guardarDisplay2
+
+	/*Despliega 4 en el display 2*/
+
+	MOV r0,8
+	MOV r1, #0
+	BL SetGpio
+
+	MOV r0, #23
+	MOV r1, #0
+	BL SetGpio
+
+	MOV r0, #24
+	MOV r1, #1
+	BL SetGpio
+
+	MOV r0, #25
+	MOV r1, #0
+	BL SetGpio
+
+	POP {pc}
+
+display2_5:
+
+	PUSH {lr}
+
+	BL guardarDisplay2
+
+	/*Despliega 5 en el display 2*/
+
+	MOV r0, #8
+	MOV r1, #1
+	BL SetGpio
+
+	MOV r0, #23
+	MOV r1, #0
+	BL SetGpio
+
+	MOV r0, #24
+	MOV r1, #1
+	BL SetGpio
+
+	MOV r0, #25
+	MOV r1, #0
+	BL SetGpio
+
+	POP {pc}
+
+display2_6:
+
+	PUSH {lr}
+
+	BL guardarDisplay2
+
+	/*Despliega 6 en el display 2*/
+
+	MOV r0, #8
+	MOV r1, #0
+	BL SetGpio
+
+	MOV r0, #23
+	MOV r1, #1
+	BL SetGpio
+
+	MOV r0, #24
+	MOV r1, #1
+	BL SetGpio
+
+	MOV r0, #25
+	MOV r1, #0
+	BL SetGpio
+
+	POP {pc}
+
+display2_7:
+
+	PUSH {lr}
+
+	BL guardarDisplay2
+
+	/*Despliega 7 en el display 2*/
+
+	MOV r0, #8
+	MOV r1, #1
+	BL SetGpio
+
+	MOV r0, #23
+	MOV r1, #1
+	BL SetGpio
+
+	MOV r0, #24
+	MOV r1, #1
+	BL SetGpio
+
+	MOV r0, #25
+	MOV r1, #0
+	BL SetGpio
+
+	POP {pc}
+
+display2_8:
+
+	PUSH {lr}
+
+	BL guardarDisplay2
+
+	/*Despliega 8 en el display 2*/
+
+	MOV r0, #8
+	MOV r1, #0
+	BL SetGpio
+
+	MOV r0, #23
+	MOV r1, #0
+	BL SetGpio
+
+	MOV r0, #24
+	MOV r1, #0
+	BL SetGpio
+
+	MOV r0, #25
+	MOV r1, #1
+	BL SetGpio
+
+	POP {pc}
+
+display2_9:
+
+	PUSH {lr}
+
+	BL guardarDisplay2
+
+	/*Despliega 9 en el display 2*/
+
+	MOV r0, #8
+	MOV r1, #1
+	BL SetGpio
+
+	MOV r0, #23
+	MOV r1, #0
+	BL SetGpio
+
+	MOV r0, #24
+	MOV r1, #0
+	BL SetGpio
+
+	MOV r0, #25
+	MOV r1, #1
+	BL SetGpio
+
+	POP {pc}
+
+display2_0:
+
+	PUSH {lr}
+
+	BL guardarDisplay2
+
+	/*Despliega 0 en el display 2*/
+
+	MOV r0, #8
+	MOV r1, #0
+	BL SetGpio
+
+	MOV r0, #23
+	MOV r1, #0
+	BL SetGpio
+
+	MOV r0, #24
+	MOV r1, #0
+	BL SetGpio
+
+	MOV r0, #25
 	MOV r1, #0
 	BL SetGpio
 
